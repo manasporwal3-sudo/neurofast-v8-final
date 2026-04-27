@@ -1,0 +1,31 @@
+{
+  "framework": "nextjs",
+  "buildCommand": "next build",
+  "installCommand": "npm install",
+  "regions": ["bom1"],
+  "crons": [
+    {
+      "path": "/api/jobs/poll",
+      "schedule": "*/2 * * * *"
+    }
+  ],
+  "functions": {
+    "app/api/chat/[modelId]/route.ts": {
+      "maxDuration": 60
+    },
+    "app/api/train/route.ts": {
+      "maxDuration": 30
+    },
+    "app/api/jobs/poll/route.ts": {
+      "maxDuration": 60
+    }
+  },
+  "headers": [
+    {
+      "source": "/api/webhooks/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "no-store" }
+      ]
+    }
+  ]
+}
